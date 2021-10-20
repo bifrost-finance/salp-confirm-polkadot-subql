@@ -7,4 +7,5 @@ type BalancesTransfer @entity {
   from: String
   to: String
   balance: BigInt
+  para_id: Int
 }
