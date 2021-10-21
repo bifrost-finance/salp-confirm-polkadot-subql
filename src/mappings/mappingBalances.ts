@@ -3,8 +3,9 @@ import { BalancesTransfer } from "../types";
 import { Balance } from "@polkadot/types/interfaces";
 
 const MultiSignedAccount = [
-  { address: "1UbTddpy3RggGy3nk1vAc3msmSBasbhiYRQZnAdvNdUSXJn", para_id: 2000 },
-  { address: "148fP7zCq1JErXCy92PkNam4KZNcroG9zbbiPwMB1qehgeT4", para_id: 2001 }
+  { address: "126TwBzBM4jUEK2gTphmW4oLoBWWnYvPp8hygmduTr4uds57", para_id: 2050 },
+  { address: "16D2eVuK5SWfwvtFD3gVdBC2nc2BafK31BY6PrbZHBAGew7L", para_id: 2070 },
+  { address: "1egYCubF1U5CGWiXjQnsXduiJYP49KTs8eX1jn1JrTqCYyQ", para_id: 2090 },
 ]
 
 export async function handleBalancesTransfer(event: SubstrateEvent): Promise<void> {
