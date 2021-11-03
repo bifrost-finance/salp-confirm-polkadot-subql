@@ -22,3 +22,14 @@ type TransferBatch @entity {
   para_id: String
   referrer: String
 }
+
+type Contributed @entity{
+  id: ID! # blockHeight + '-' + eventId
+  blockHeight: Int
+  eventId: Int
+  extrinsicId: Int
+  time: Date
+  accountId: String
+  paraId: String
+  balanceOf: String
+}
