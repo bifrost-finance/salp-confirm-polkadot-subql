@@ -31,5 +31,5 @@ type Contributed @entity{
   time: Date
   accountId: String
   paraId: String
-  balanceOf: String
+  balanceOf: BigInt
 }
