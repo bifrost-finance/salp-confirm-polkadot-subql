@@ -1,4 +1,16 @@
-type BalancesTransfer @entity {
+# type BalancesTransfer @entity {
+#   id: ID!
+#   event_id: Int!
+#   extrinsic_id: Int
+#   block_height: Int!
+#   block_timestamp: Date!
+#   from: String
+#   to: String
+#   balance: BigInt
+#   para_id: Int
+# }
+
+type TransferBatch @entity {
   id: ID!
   event_id: Int!
   extrinsic_id: Int
@@ -7,5 +19,6 @@ type BalancesTransfer @entity {
   from: String
   to: String
   balance: BigInt
-  para_id: Int
+  para_id: String
+  referrer: String
 }

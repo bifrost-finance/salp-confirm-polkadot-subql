@@ -1,20 +1,28 @@
 import { SubstrateExtrinsic, SubstrateEvent, SubstrateBlock } from "@subql/types";
-import { BalancesTransfer } from "../types";
-import { Balance } from "@polkadot/types/interfaces";
+import { BalancesTransfer, TransferBatch } from "../types";
+import { Bytes } from "@polkadot/types";
+import { SignedBlock, Balance } from "@polkadot/types/interfaces";
 
 const MultiSignedAccount = [
   { address: "126TwBzBM4jUEK2gTphmW4oLoBWWnYvPp8hygmduTr4uds57", para_id: 2050 },
   { address: "16D2eVuK5SWfwvtFD3gVdBC2nc2BafK31BY6PrbZHBAGew7L", para_id: 2070 },
   { address: "1egYCubF1U5CGWiXjQnsXduiJYP49KTs8eX1jn1JrTqCYyQ", para_id: 2090 },
 ]
+const BatchCallId = "26,0"; // 0x1a00
+const BatchAllCallId = "26,2"; // 0x1a02
+const BalancesTransferCallId = "0x0500";
+const SystemRemarkCallId = "0,1";
+const SystemRemarkWithEventCallId = "0x0009";
 
 export async function handleBalancesTransfer(event: SubstrateEvent): Promise<void> {
-  const blockNumber = event.block.block.header.number.toNumber();
+  const tx = event.extrinsic.extrinsic.method;
+  if (tx !== undefined && tx.callIndex.toString() === BatchAllCallId) {
+    const blockNumber = event.block.block.header.number.toNumber();
 
-  const { event: { data: [from, to, balance] } } = event;
-  const account = MultiSignedAccount.find(vendor => vendor.address === to.toString());
-  if (account !== undefined) {
-    const record = new BalancesTransfer(blockNumber.toString() + '-' + event.idx.toString());
+    const { event: { data: [from, to, balance] } } = event;
+    // const account = MultiSignedAccount.find(vendor => vendor.address === to.toString());
+    // if (account !== undefined) {
+    const record = new TransferBatch(blockNumber.toString() + '-' + event.idx.toString());
     record.block_height = blockNumber;
     record.event_id = event.idx;
     record.extrinsic_id = event.extrinsic ? event.extrinsic.idx : null;
@@ -22,8 +30,30 @@ export async function handleBalancesTransfer(event: SubstrateEvent): Promise<voi
     record.from = from.toString();
     record.to = to.toString();
     record.balance = (balance as Balance).toBigInt();
-    record.para_id = account.para_id;
+    // record.para_id = account.para_id;
+    // }
+
+    const args = JSON.parse(JSON.stringify(tx.args));
+    args[0].forEach((value, index) => {
+      if (index == 1 && value.callIndex.toString() === SystemRemarkWithEventCallId) {
+        record.para_id = hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
+      }
+      if (index == 2 && value.callIndex.toString() === SystemRemarkWithEventCallId) {
+        record.referrer = hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
+      }
+    })
     await record.save();
   }
+  const testEvents = JSON.stringify(event.extrinsic.extrinsic.method.args);
+  logger.info(testEvents);
+  logger.info(tx.callIndex.toString());
 }
 
+function hex_to_ascii(str1) {
+  var hex = str1.toString();
+  var str = '';
+  for (var n = 0; n < hex.length; n += 2) {
+    str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+  }
+  return str;
+}
