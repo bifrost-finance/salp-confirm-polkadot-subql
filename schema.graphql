@@ -28,8 +28,8 @@ type Contributed @entity{
   blockHeight: Int
   eventId: Int
   extrinsicId: Int
-  time: Date
+  block_timestamp: Date
   accountId: String
-  paraId: String
+  paraId: Int
   balanceOf: BigInt
 }
