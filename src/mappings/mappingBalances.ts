@@ -6,7 +6,7 @@ import { SignedBlock, Balance } from "@polkadot/types/interfaces";
 const MultiSignedAccount = [
   // The mix-address which stores the money from users;
   // The mnemonic of test-account defaulted: scout federal ball vendor clump spring cruel fiction keen parade link aspect
-  { address: "15yYSqvJ6kwksTnYYEKaGAtN6vvRVBLPv4zgUpw3mST1iFXb" }
+  { address: "13yhdvhAzML3u5MENoG8WCT9bTVT5H3C6pjdMpy4PZNisgbS" }
 ]
 const BatchCallId = "26,0"; // 0x1a00
 const BatchAllCallId = "26,2"; // 0x1a02
@@ -35,8 +35,10 @@ export async function handleBalancesTransfer(event: SubstrateEvent): Promise<voi
     const args = JSON.parse(JSON.stringify(tx.args));
     args[0].forEach((value, index) => {
       if (index == 1 && value.callIndex.toString() === SystemRemarkWithEventCallId) {
-        const para_id_str=hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
-        record.para_id = Number(para_id_str);
+        const para_id_str = hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
+        if (typeof para_id_str == 'number') {
+          record.para_id = Number(para_id_str);
+        }
       }
       if (index == 2 && value.callIndex.toString() === SystemRemarkWithEventCallId) {
         record.referrer = hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
