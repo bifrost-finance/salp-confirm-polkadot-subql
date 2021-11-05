@@ -4,10 +4,9 @@ import { Bytes } from "@polkadot/types";
 import { SignedBlock, Balance } from "@polkadot/types/interfaces";
 
 const MultiSignedAccount = [
-  { address: "126TwBzBM4jUEK2gTphmW4oLoBWWnYvPp8hygmduTr4uds57", para_id: 2050 },
-  { address: "16D2eVuK5SWfwvtFD3gVdBC2nc2BafK31BY6PrbZHBAGew7L", para_id: 2070 },
-  { address: "1egYCubF1U5CGWiXjQnsXduiJYP49KTs8eX1jn1JrTqCYyQ", para_id: 2090 },
-  { address: "16kZJGPJ37uYxjs7adswyEHbPYeHS9jQHSaSUJhkfvWPcoeF" }
+  // The mix-address which stores the money from users;
+  // The mnemonic of test-account defaulted: scout federal ball vendor clump spring cruel fiction keen parade link aspect
+  { address: "15yYSqvJ6kwksTnYYEKaGAtN6vvRVBLPv4zgUpw3mST1iFXb" }
 ]
 const BatchCallId = "26,0"; // 0x1a00
 const BatchAllCallId = "26,2"; // 0x1a02
