@@ -21,7 +21,7 @@ type TransferBatch @entity {
   from: String
   to: String
   balance: BigInt
-  para_id: String
+  para_id: Int
   referrer: String
 }
 
