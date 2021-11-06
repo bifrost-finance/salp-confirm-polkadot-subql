@@ -3,19 +3,19 @@ description: ''
 repository: https://github.com/bifrost-finance/salp-confirm-polkadot-subql.git
 schema: ./schema.graphql
 network:
-  # endpoint: wss://polkadot.api.onfinality.io/public-ws
-  endpoint: wss://polkadot-rpc.testnet2.liebi.com/ws
+  endpoint: wss://polkadot.api.onfinality.io/public-ws
+  # endpoint: wss://polkadot-rpc.testnet2.liebi.com/ws
 dataSources:
   - name: main
     kind: substrate/Runtime
-    startBlock: 1
+    startBlock: 7567797
     mapping:
       handlers:
-        - handler: handleBalancesTransfer
-          kind: substrate/EventHandler
-          filter:
-            module: balances
-            method: Transfer
+        # - handler: handleBalancesTransfer
+        #   kind: substrate/EventHandler
+        #   filter:
+        #     module: balances
+        #     method: Transfer
         - handler: handleContributed
           kind: substrate/EventHandler
           filter:

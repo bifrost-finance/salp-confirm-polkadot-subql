@@ -4,9 +4,7 @@ import { Bytes } from "@polkadot/types";
 import { SignedBlock, Balance } from "@polkadot/types/interfaces";
 
 const MultiSignedAccount = [
-  // The mix-address which stores the money from users;
-  // The mnemonic of test-account defaulted: scout federal ball vendor clump spring cruel fiction keen parade link aspect
-  { address: "13yhdvhAzML3u5MENoG8WCT9bTVT5H3C6pjdMpy4PZNisgbS" }
+  { address: "" }
 ]
 const BatchCallId = "26,0"; // 0x1a00
 const BatchAllCallId = "26,2"; // 0x1a02
