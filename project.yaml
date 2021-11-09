@@ -4,7 +4,7 @@ repository: https://github.com/bifrost-finance/salp-confirm-polkadot-subql.git
 schema: ./schema.graphql
 network:
   # endpoint: wss://polkadot.api.onfinality.io/public-ws
-  endpoint: wss://bifrost-rpc.testnet.liebi.com/polkadot
+  endpoint: wss://polkadot-rpc.testnet2.liebi.com/ws
 dataSources:
   - name: main
     kind: substrate/Runtime

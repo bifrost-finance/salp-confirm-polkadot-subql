@@ -36,7 +36,7 @@ export async function handleBalancesTransfer(event: SubstrateEvent): Promise<voi
     args[0].forEach((value, index) => {
       if (index == 1 && value.callIndex.toString() === SystemRemarkWithEventCallId) {
         const para_id_str = hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
-        if (typeof para_id_str == 'number') {
+        if (typeof para_id_str === 'number' || Number(para_id_str) !== 0) {
           record.para_id = Number(para_id_str);
         }
       }
