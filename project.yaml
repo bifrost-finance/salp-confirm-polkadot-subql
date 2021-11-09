@@ -11,11 +11,11 @@ dataSources:
     startBlock: 7567797
     mapping:
       handlers:
-        # - handler: handleBalancesTransfer
-        #   kind: substrate/EventHandler
-        #   filter:
-        #     module: balances
-        #     method: Transfer
+        - handler: handleBalancesTransfer
+          kind: substrate/EventHandler
+          filter:
+            module: balances
+            method: Transfer
         - handler: handleContributed
           kind: substrate/EventHandler
           filter:
