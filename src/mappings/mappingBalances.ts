@@ -4,7 +4,7 @@ import { Bytes } from "@polkadot/types";
 import { SignedBlock, Balance } from "@polkadot/types/interfaces";
 
 const MultiSignedAccount = [
-  { address: "" }
+  { address: "14AMZ3gw4tRsrdp78i4MmHZ8EFbXTMfuXGQMEC3t1GoqLboH" }
 ]
 const BatchCallId = "26,0"; // 0x1a00
 const BatchAllCallId = "26,2"; // 0x1a02
