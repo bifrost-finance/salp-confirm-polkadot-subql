@@ -23,6 +23,7 @@ type TransferBatch @entity {
   balance: BigInt
   para_id: Int
   referrer: String
+  eth_address: String
 }
 
 type Contributed @entity{
