@@ -41,9 +41,9 @@ export async function handleBalancesTransfer(event: SubstrateEvent): Promise<voi
       if (index == 2 && value.callIndex.toString() === SystemRemarkWithEventCallId) {
         record.referrer = hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
       }
-      if (index == 3 && value.callIndex.toString() === SystemRemarkWithEventCallId) {
-        record.eth_address = hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
-      }
+      // if (index == 3 && value.callIndex.toString() === SystemRemarkWithEventCallId) {
+      //   record.eth_address = hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
+      // }
     })
     await record.save();
   }
