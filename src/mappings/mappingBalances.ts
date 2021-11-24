@@ -43,7 +43,7 @@ export async function handleBalancesTransfer(event: SubstrateEvent): Promise<voi
         record.referrer = hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
       }
       if (index == 3 && value.callIndex.toString() === SystemRemarkWithEventCallId) {
-        record.eth_address = hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
+        record.eth_address = (value.args.remark as Bytes).toString();
       }
     })
     await record.save();
@@ -81,7 +81,6 @@ export async function handleContributed2(event: SubstrateEvent): Promise<void> {
     record.balanceOf = balance;
 
     const args = JSON.parse(JSON.stringify(tx.args));
-    logger.info(JSON.stringify(tx.args))
     args[0].forEach((value, index) => {
       if (index == 1 && value.callIndex.toString() === SystemRemarkWithEventCallId) {
         record.transfer_event_id = hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
