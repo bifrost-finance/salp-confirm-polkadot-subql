@@ -23,7 +23,7 @@ type TransferBatch @entity {
   balance: BigInt
   para_id: Int
   referrer: String
-#   eth_address: String
+  eth_address: String
 }
 
 type Contributed @entity{
@@ -35,4 +35,18 @@ type Contributed @entity{
   accountId: String
   paraId: Int
   balanceOf: BigInt
+}
+
+type ContributedBatch @entity {
+  id: ID!
+  event_id: Int!
+  extrinsic_id: Int
+  extrinsic_hash: String
+  block_height: Int!
+  block_timestamp: Date!
+  block_hash: String
+  accountId: String
+  paraId: Int
+  balanceOf: BigInt
+  account: String
 }

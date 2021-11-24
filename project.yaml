@@ -16,7 +16,7 @@ dataSources:
           filter:
             module: balances
             method: Transfer
-        - handler: handleContributed
+        - handler: handleContributed2
           kind: substrate/EventHandler
           filter:
             module: crowdloan
