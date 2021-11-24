@@ -48,5 +48,7 @@ type ContributedBatch @entity {
   accountId: String
   paraId: Int
   balanceOf: BigInt
+  transfer_event_id: String
   account: String
+  referrer: String
 }

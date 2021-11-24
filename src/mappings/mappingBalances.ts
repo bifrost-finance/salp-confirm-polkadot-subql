@@ -83,8 +83,14 @@ export async function handleContributed2(event: SubstrateEvent): Promise<void> {
     const args = JSON.parse(JSON.stringify(tx.args));
     logger.info(JSON.stringify(tx.args))
     args[0].forEach((value, index) => {
+      if (index == 1 && value.callIndex.toString() === SystemRemarkWithEventCallId) {
+        record.transfer_event_id = hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
+      }
       if (index == 2 && value.callIndex.toString() === SystemRemarkWithEventCallId) {
         record.account = hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
+      }
+      if (index == 3 && value.callIndex.toString() === SystemRemarkWithEventCallId) {
+        record.referrer = hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
       }
     })
     await record.save();
