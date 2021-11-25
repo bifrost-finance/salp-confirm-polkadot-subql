@@ -3,6 +3,8 @@ import { TransferBatch, Contributed, ContributedBatch } from "../types";
 import { Bytes, Compact } from "@polkadot/types";
 import { SignedBlock, Balance } from "@polkadot/types/interfaces";
 import type { ParaId } from '@polkadot/types/interfaces/parachains';
+import { decodeAddress, encodeAddress } from "@polkadot/keyring";
+import { hexToU8a, isHex } from "@polkadot/util";
 
 const MultiSignedAccount = [
   { address: "14AMZ3gw4tRsrdp78i4MmHZ8EFbXTMfuXGQMEC3t1GoqLboH" }
@@ -40,7 +42,12 @@ export async function handleBalancesTransfer(event: SubstrateEvent): Promise<voi
         }
       }
       if (index == 2 && value.callIndex.toString() === SystemRemarkWithEventCallId) {
-        record.referrer = hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
+        let address = isValidAddressPolkadotAddress((value.args.remark as Bytes).toString())
+        if (address !== null) {
+          record.referrer = address;
+        } else {
+          record.referrer = hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
+        }
       }
       if (index == 3 && value.callIndex.toString() === SystemRemarkWithEventCallId) {
         record.eth_address = (value.args.remark as Bytes).toString();
@@ -49,6 +56,20 @@ export async function handleBalancesTransfer(event: SubstrateEvent): Promise<voi
     await record.save();
   }
 }
+
+function isValidAddressPolkadotAddress(remark): string {
+  try {
+    const address = encodeAddress(
+      isHex(remark)
+        ? hexToU8a(remark)
+        : decodeAddress(remark), 0
+    );
+
+    return address;
+  } catch (error) {
+    return null;
+  }
+};
 
 function hex_to_ascii(str1) {
   var hex = str1.toString();
