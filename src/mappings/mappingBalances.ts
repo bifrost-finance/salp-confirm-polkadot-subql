@@ -13,7 +13,7 @@ const BatchCallId = "26,0"; // 0x1a00
 const BatchAllCallId = "26,2"; // 0x1a02
 const BalancesTransferCallId = "0x0500";
 const SystemRemarkCallId = "0,1";
-const SystemRemarkWithEventCallId = "0x0009";
+const SystemRemarkWithEventCallId = "0x0008";
 
 export async function handleBalancesTransfer(event: SubstrateEvent): Promise<void> {
   const blockNumber = event.block.block.header.number.toNumber();
