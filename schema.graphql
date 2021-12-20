@@ -52,3 +52,12 @@ type ContributedBatch @entity {
   account: String
   referrer: String
 }
+
+type AllRefunded @entity{
+  id: ID!
+  block_height: Int
+  event_id: Int
+  extrinsic_id: Int
+  block_timestamp: Date
+  para_id: Int
+}

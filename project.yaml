@@ -21,8 +21,13 @@ dataSources:
           filter:
             module: crowdloan
             method: Contributed
-        - handler: handleContributed2
+        # - handler: handleContributed2
+        #   kind: substrate/EventHandler
+        #   filter:
+        #     module: crowdloan
+        #     method: Contributed
+        - handler: handleAllRefunded
           kind: substrate/EventHandler
           filter:
             module: crowdloan
-            method: Contributed
+            method: AllRefunded

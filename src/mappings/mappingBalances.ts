@@ -13,10 +13,20 @@ const BatchCallId = "26,0"; // 0x1a00
 const BatchAllCallId = "26,2"; // 0x1a02
 const BalancesTransferCallId = "0x0500";
 const SystemRemarkCallId = "0,1";
-const SystemRemarkWithEventCallId = "0x0008";
+
+function getSystemRemarkWithEventCallId(blockNumber: number): string {
+  let SystemRemarkWithEventCallId = "0x0008";
+  if (blockNumber < 8117655) {
+    SystemRemarkWithEventCallId = "0x0009";
+  } else {
+    SystemRemarkWithEventCallId = "0x0008";
+  }
+  return SystemRemarkWithEventCallId
+}
 
 export async function handleBalancesTransfer(event: SubstrateEvent): Promise<void> {
   const blockNumber = event.block.block.header.number.toNumber();
+  const SystemRemarkWithEventCallId = getSystemRemarkWithEventCallId(blockNumber);
 
   const { event: { data: [from, to, balance] } } = event;
   const account = MultiSignedAccount.find(vendor => vendor.address === to.toString());
@@ -82,6 +92,7 @@ function hex_to_ascii(str1) {
 
 export async function handleContributed2(event: SubstrateEvent): Promise<void> {
   const blockNumber = event.block.block.header.number.toNumber();
+  const SystemRemarkWithEventCallId = getSystemRemarkWithEventCallId(blockNumber);
 
   const { event: { data: [account_id_origin, para_id_origin, balance_origin] } } = event;
   const balance = (balance_origin as Compact<Balance>).toBigInt();
