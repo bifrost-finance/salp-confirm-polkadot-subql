@@ -127,3 +127,46 @@ export async function handleContributed2(event: SubstrateEvent): Promise<void> {
     await record.save();
   }
 }
+
+export async function testBalancesTransfer(event: SubstrateEvent): Promise<void> {
+  const blockNumber = event.block.block.header.number.toNumber();
+  const SystemRemarkWithEventCallId = "0x0008";
+
+  const { event: { data: [from, to, balance] } } = event;
+  const account = MultiSignedAccount.find(vendor => vendor.address === to.toString());
+  const tx = event.extrinsic.extrinsic.method;
+  if (tx !== undefined && tx.callIndex.toString() === BatchAllCallId && account !== undefined) {
+    const record = new TransferBatch(blockNumber.toString() + '-' + event.idx.toString());
+    record.block_height = blockNumber;
+    record.block_hash = event.block.hash ? event.block.hash.toString() : null;
+    record.event_id = event.idx;
+    record.extrinsic_id = event.extrinsic ? event.extrinsic.idx : null;
+    record.extrinsic_hash = event.extrinsic ? event.extrinsic.extrinsic.hash.toString() : null;
+    record.block_timestamp = event.block.timestamp;
+    record.from = from.toString();
+    record.to = to.toString();
+    record.balance = (balance as Balance).toBigInt();
+
+    const args = JSON.parse(JSON.stringify(tx.args));
+    args[0].forEach((value, index) => {
+      if (index == 1 && value.callIndex.toString() === SystemRemarkWithEventCallId) {
+        const para_id_str = hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
+        if (typeof para_id_str === 'number' || Number(para_id_str) !== 0) {
+          record.para_id = Number(para_id_str);
+        }
+      }
+      if (index == 2 && value.callIndex.toString() === SystemRemarkWithEventCallId) {
+        let address = isValidAddressPolkadotAddress((value.args.remark as Bytes).toString())
+        if (address !== null) {
+          record.referrer = address;
+        } else {
+          record.referrer = hex_to_ascii((value.args.remark as Bytes).toString().slice(2));
+        }
+      }
+      if (index == 3 && value.callIndex.toString() === SystemRemarkWithEventCallId) {
+        record.eth_address = (value.args.remark as Bytes).toString();
+      }
+    })
+    await record.save();
+  }
+}
