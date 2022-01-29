@@ -61,3 +61,23 @@ type AllRefunded @entity{
   block_timestamp: Date
   para_id: Int
 }
+
+type DemocracyInfo @entity {
+  id: ID!
+  event_id: Int
+  extrinsic_id: Int
+  block_height: Int!
+  block_timestamp: Date
+  method: String!
+  data: String
+}
+
+type CouncilInfo @entity {
+  id: ID!
+  event_id: Int
+  extrinsic_id: Int
+  block_height: Int!
+  block_timestamp: Date
+  method: String!
+  data: String
+}

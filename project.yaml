@@ -31,3 +31,7 @@ dataSources:
           filter:
             module: crowdloan
             method: AllRefunded
+        - handler: democracy
+          kind: substrate/BlockHandler
+        - handler: council
+          kind: substrate/BlockHandler
