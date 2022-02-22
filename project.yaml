@@ -4,7 +4,7 @@ repository: https://github.com/bifrost-finance/salp-confirm-polkadot-subql.git
 schema: ./schema.graphql
 network:
   endpoint: wss://rpc.polkadot.io
-  # endpoint: wss://polkadot-rpc.testnet2.liebi.com/ws
+  # endpoint: wss://polkadot.api.onfinality.io/public-ws
 dataSources:
   - name: main
     kind: substrate/Runtime
@@ -21,11 +21,11 @@ dataSources:
           filter:
             module: crowdloan
             method: Contributed
-        # - handler: handleContributed2
-        #   kind: substrate/EventHandler
-        #   filter:
-        #     module: crowdloan
-        #     method: Contributed
+        - handler: handleBatchCompleted
+          kind: substrate/EventHandler
+          filter:
+            module: utility
+            method: BatchCompleted
         - handler: handleAllRefunded
           kind: substrate/EventHandler
           filter:

@@ -108,7 +108,6 @@ export async function handleContributed2(event: SubstrateEvent): Promise<void> {
     record.extrinsic_id = event.extrinsic ? event.extrinsic.idx : null;
     record.extrinsic_hash = event.extrinsic ? event.extrinsic.extrinsic.hash.toString() : null;
     record.block_timestamp = event.block.timestamp;
-    record.accountId = account_id;
     record.paraId = para_id;
     record.balanceOf = balance;
 
