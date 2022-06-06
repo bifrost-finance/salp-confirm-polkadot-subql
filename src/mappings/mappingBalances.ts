@@ -99,7 +99,7 @@ export async function handleContributed2(event: SubstrateEvent): Promise<void> {
   const account_id = account_id_origin.toString();
   const para_id = (para_id_origin as ParaId).toNumber();
   const account = MultiSignedAccount.find(vendor => vendor.address === account_id);
-  const tx = event.extrinsic.extrinsic.method;
+  const tx = event.extrinsic ? event.extrinsic.extrinsic.method : undefined;
   if (tx !== undefined && tx.callIndex.toString() === BatchAllCallId && account !== undefined) {
     const record = new ContributedBatch(blockNumber.toString() + '-' + event.idx.toString());
     record.block_height = blockNumber;
