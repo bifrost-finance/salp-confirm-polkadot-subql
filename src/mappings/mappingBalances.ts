@@ -30,7 +30,7 @@ export async function handleBalancesTransfer(event: SubstrateEvent): Promise<voi
 
   const { event: { data: [from, to, balance] } } = event;
   const account = MultiSignedAccount.find(vendor => vendor.address === to.toString());
-  const tx = event.extrinsic.extrinsic.method;
+  const tx = event.extrinsic ? event.extrinsic.extrinsic.method : undefined;
   if (tx !== undefined && tx.callIndex.toString() === BatchAllCallId && account !== undefined) {
     const record = new TransferBatch(blockNumber.toString() + '-' + event.idx.toString());
     record.block_height = blockNumber;
